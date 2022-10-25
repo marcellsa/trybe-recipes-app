@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 
 export default function Header() {
+  const [showInput, setShowInput] = useState(false);
+
   const history = useHistory();
   const { pathname } = history.location;
   console.log(pathname);
@@ -38,13 +40,21 @@ export default function Header() {
     }
   };
 
+  const inputSeartch = () => {
+    if (showInput === true) {
+      setShowInput(false);
+    } else {
+      setShowInput(true);
+    }
+  };
+
   return (
     <div>
       <h1 data-testid="page-title">{ title() }</h1>
       {
-        search()
+        search() === true
       && (
-        <button type="button" onClick={ () => history.push('/search') }>
+        <button type="button" onClick={ inputSeartch }>
           <img
             src={ searchIcon }
             alt="search"
@@ -60,6 +70,12 @@ export default function Header() {
           data-testid="profile-top-btn"
         />
       </button>
+
+      {
+        showInput && (
+          <input type="text" data-testid="search-input" />
+        )
+      }
 
     </div>
   );
