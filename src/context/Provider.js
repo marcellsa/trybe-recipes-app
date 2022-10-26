@@ -2,7 +2,6 @@ import React, { useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Context from './Context';
 import fetchAPI from '../services/FetchAPI';
-// atualizando
 
 export default function Provider({ children }) {
   const [mealsRecipes, setmealsRecipes] = useState([]);
@@ -13,12 +12,15 @@ export default function Provider({ children }) {
       const result = await fetchAPI(url);
       setmealsRecipes(result);
     };
-    getAPI('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+    getAPI('https://www.themealdb.com/api/json/v1/1/list.php?a=list');
   }, []);
 
-  const context = useMemo(() => {
-
-  }, []);
+  const context = useMemo(
+    () => ({
+      mealsRecipes,
+    }),
+    [mealsRecipes],
+  );
   return (
     <Context.Provider value={ context }>
       {children}
