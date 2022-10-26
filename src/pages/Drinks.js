@@ -7,4 +7,5 @@ export default function Drinks() {
       <Header />
     </div>
   );
-}
+} // corrigindo
+
