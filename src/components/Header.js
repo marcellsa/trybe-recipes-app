@@ -8,7 +8,7 @@ export default function Header() {
 
   const history = useHistory();
   const { pathname } = history.location;
-  console.log(pathname);
+  // console.log(pathname);
 
   const title = () => {
     switch (pathname) {
