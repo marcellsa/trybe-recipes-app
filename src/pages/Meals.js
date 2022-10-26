@@ -1,5 +1,5 @@
 import React from 'react';
-import { Footer } from 'react-bootstrap/lib/Panel';
+import Footer from '../components/Footer';
 
 export default function Meals() {
   return (

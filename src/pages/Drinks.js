@@ -1,5 +1,5 @@
 import React from 'react';
-import { Footer } from 'react-bootstrap/lib/Modal';
+import Footer from '../components/Footer';
 
 export default function Drinks() {
   return (
