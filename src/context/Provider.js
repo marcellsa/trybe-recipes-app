@@ -2,7 +2,7 @@ import React, { useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Context from './Context';
 import fetchAPI from '../services/FetchAPI';
-
+// agagar comentario
 export default function Provider({ children }) {
   const [mealsRecipes, setmealsRecipes] = useState([]);
   console.log(mealsRecipes);
