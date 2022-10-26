@@ -1,7 +1,12 @@
 import React from 'react';
+import SearchBar from '../components/SearchBar';
 
 export default function Login() {
   return (
-    <div>Login</div>
+    <div>
+      {' '}
+      <SearchBar />
+    </div>
+
   );
 }
