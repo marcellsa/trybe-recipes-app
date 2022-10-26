@@ -1,7 +1,13 @@
 import React from 'react';
+import { Footer } from 'react-bootstrap/lib/Modal';
 
 export default function DetailsRecipes() {
   return (
-    <div>DetailsMeals</div>
+    <div>
+      <h1>
+        DetailsMeals
+      </h1>
+      <Footer />
+    </div>
   );
 }
