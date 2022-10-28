@@ -5,7 +5,9 @@ import Footer from '../components/Footer';
 export default function DoneRecipes() {
   return (
     <div>
-      <Header />
+      <Header>
+        Done Recipes
+      </Header>
       <Footer />
     </div>
   );

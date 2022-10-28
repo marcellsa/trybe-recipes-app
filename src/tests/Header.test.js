@@ -1,33 +1,39 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { act } from 'react-dom/test-utils';
-import renderWithRouter from '../services/henderWithRouter';
-import Header from '../components/Header';
+import renderWithRouter from './renderWithRouter';
+import Meals from '../pages/Meals';
+import Drinks from '../pages/Drinks';
+
+const SEARCH = 'search-top-btn';
+const INPUT = 'search-input';
+const PROFILE = 'profile-top-btn';
 
 describe('Test Header', () => {
-  it('Verifica se o Header é renderizado', () => {
-    const { history } = renderWithRouter(<Header />);
+  it('Verifica se o botão do profile redireciona para /profile', () => {
+    const { history } = renderWithRouter(<Meals />);
+    const profile = screen.getByTestId(PROFILE);
+    userEvent.click(profile);
+    expect(history.location.pathname).toBe('/profile');
+  });
 
-    const profile = screen.getByTestId('profile-top-btn');
-    const search = screen.getByTestId('search-top-btn');
-    const pageTitle = screen.getByTestId('page-title');
-
-    expect(profile).toBeInTheDocument();
+  it('Verifica se o Header é renderizado no Meals', async () => {
+    renderWithRouter(<Meals />);
+    const search = await screen.findByTestId(SEARCH);
     expect(search).toBeInTheDocument();
-    expect(pageTitle).toBeInTheDocument();
-    expect(profile).toHaveAttribute('alt', 'profile');
-    expect(search).toHaveAttribute('alt', 'search');
-
     userEvent.click(search);
-    act(() => {
-      history.push('/profile');
-    });
-
-    const searchInput = screen.getByTestId('search-input');
+    const searchInput = await screen.findByTestId(INPUT);
     expect(searchInput).toBeInTheDocument();
-    userEvent.type(searchInput, 'test');
     userEvent.click(search);
-    expect(searchInput).not.toBeInTheDocument();
+  });
+
+  it('Verifica se o Header é renderizado no Drinks', async () => {
+    renderWithRouter(<Drinks />);
+    const search = await screen.findByTestId(SEARCH);
+    expect(search).toBeInTheDocument();
+    userEvent.click(search);
+    const searchInput = await screen.findByTestId(INPUT);
+    expect(searchInput).toBeInTheDocument();
+    userEvent.click(search);
   });
 });

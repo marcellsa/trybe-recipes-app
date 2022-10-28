@@ -1,7 +1,5 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-// import { act } from 'react-dom/test-utils';
-// import App from '../App';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import Meals from '../pages/Meals';
@@ -48,4 +46,5 @@ describe('Testando o compoenente Footer', () => {
     userEvent.click(mealsButton);
     expect(history.location.pathname).toBe('/meals');
   });
+
 });
