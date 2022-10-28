@@ -5,7 +5,9 @@ import Footer from '../components/Footer';
 export default function Favorite() {
   return (
     <div>
-      <Header />
+      <Header>
+        Favorite Recipes
+      </Header>
       <Footer />
     </div>
   );

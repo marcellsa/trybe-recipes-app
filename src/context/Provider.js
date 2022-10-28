@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import Context from './Context';
 import fetchAPI from '../services/FetchAPI';
 
-export default function Provider({ children }) {
+function Provider({ children }) {
   const [mealsRecipes, setmealsRecipes] = useState([]);
-  console.log(mealsRecipes);
 
   useEffect(() => {
     const getAPI = async (url) => {
@@ -31,3 +30,5 @@ export default function Provider({ children }) {
 Provider.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
+export default Provider;
