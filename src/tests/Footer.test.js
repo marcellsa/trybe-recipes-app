@@ -46,5 +46,4 @@ describe('Testando o compoenente Footer', () => {
     userEvent.click(mealsButton);
     expect(history.location.pathname).toBe('/meals');
   });
-
 });
