@@ -7,6 +7,7 @@ export default function Favorite() {
       <Header>
         Favorite Recipes
       </Header>
+      {/* não é necessário o componente footer aqui */}
     </div>
   );
 }

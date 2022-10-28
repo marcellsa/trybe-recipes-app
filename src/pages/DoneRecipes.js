@@ -7,6 +7,7 @@ export default function DoneRecipes() {
       <Header>
         Done Recipes
       </Header>
+      {/* não é necessário o componente footer aqui */}
     </div>
   );
 }
