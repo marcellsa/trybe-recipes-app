@@ -1,10 +1,10 @@
 import React from 'react';
-import Footer from '../components/Footer';
 
 export default function DetailsRecipes() {
   return (
     <div>
-      <Footer />
+      DetailsRecipes
+      {/* não é necessário o componente footer aqui */}
     </div>
   );
 }
