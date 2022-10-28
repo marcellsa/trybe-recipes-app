@@ -1,51 +1,51 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from '../App';
+import { screen } from '@testing-library/react';
+// import { act } from 'react-dom/test-utils';
+// import App from '../App';
+import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
-import { act } from 'react-dom/test-utils';
-// import Meals from '../pages/Meals';
-// import Drinks from '../pages/Drinks';
+import Meals from '../pages/Meals';
+import Drinks from '../pages/Drinks';
 
-// importar páginas
+const MEALS_BUTTON_ID = 'meals-bottom-btn';
+const DRINKS_BUTTON_ID = 'drinks-bottom-btn';
 
 describe('Testando o compoenente Footer', () => {
   test('1) Se o ícone de meals está presente na página Meals', () => {
-   
-    const { history } = renderWithRouter(<App />);
-    act(() => {
-      history.push('/meals');
-    })
-    const mealsButton = screen.getByTestId('meals-bottom-btn');
+    renderWithRouter(<Meals />);
+    const mealsButton = screen.getByTestId(MEALS_BUTTON_ID);
     expect(mealsButton).toBeInTheDocument();
   });
 
   test('2) Se o ícone de drinks está presente na página Meals', () => {
-    
-    const { history } = renderWithRouter(<App />);
-    act(() => {
-      history.push('/meals');
-    })
-    const drinksButton = screen.getByTestId('drinks-bottom-btn');
+    renderWithRouter(<Meals />);
+    const drinksButton = screen.getByTestId(DRINKS_BUTTON_ID);
     expect(drinksButton).toBeInTheDocument();
   });
 
   test('3) Se o ícone de meals está presente na página Drinks', () => {
-
-    const { history } = renderWithRouter(<App />);
-    act(() => {
-      history.push('/drinks');
-    })
-    const mealsButton = screen.getByTestId('meals-bottom-btn');
+    renderWithRouter(<Drinks />);
+    const mealsButton = screen.getByTestId(MEALS_BUTTON_ID);
     expect(mealsButton).toBeInTheDocument();
   });
 
   test('4) Se o ícone de drinks está presente na página Drinks', () => {
-    
-    const { history } = renderWithRouter(<App />);
-    act(() => {
-      history.push('/drinks');
-    })
-    const drinksButton = screen.getByTestId('drinks-bottom-btn');
+    renderWithRouter(<Drinks />);
+    const drinksButton = screen.getByTestId(DRINKS_BUTTON_ID);
     expect(drinksButton).toBeInTheDocument();
   });
-})
+
+  test('5) Se ao clicar no ícone de DRINKS é redirecionado para lista de comidas', () => {
+    const { history } = renderWithRouter(<Meals />);
+    const drinksButton = screen.getByTestId(DRINKS_BUTTON_ID);
+    userEvent.click(drinksButton);
+    expect(history.location.pathname).toBe('/drinks');
+  });
+
+  test('6) Se ao clicar no ícone de MEALS é redirecionado para lista de comidas', () => {
+    const { history } = renderWithRouter(<Drinks />);
+    const mealsButton = screen.getByTestId(MEALS_BUTTON_ID);
+    userEvent.click(mealsButton);
+    expect(history.location.pathname).toBe('/meals');
+  });
+});
