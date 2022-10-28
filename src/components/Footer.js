@@ -7,14 +7,14 @@ function Footer() {
   return (
     <footer data-testid="footer">
       <Link to="/drinks">
-        <button type="button">
-          <img data-testid="drinks-bottom-btn" src={ drinkIcon } alt="ícone de bebidas" />
+        <button data-testid="drinks-bottom-btn" type="button">
+          <img src={ drinkIcon } alt="ícone de bebidas" />
         </button>
       </Link>
 
       <Link to="/meals">
-        <button type="button">
-          <img data-testid="meals-bottom-btn" src={ mealIcon } alt="ícone de comidas" />
+        <button data-testid="meals-bottom-btn" type="button">
+          <img src={ mealIcon } alt="ícone de comidas" />
         </button>
       </Link>
     </footer>
