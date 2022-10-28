@@ -1,7 +1,10 @@
 import React from 'react';
+import Footer from '../components/Footer';
 
 export default function DetailsDrinks() {
   return (
-    <div>DetailsDrinks</div>
+    <div>
+      <Footer />
+    </div>
   );
 }
