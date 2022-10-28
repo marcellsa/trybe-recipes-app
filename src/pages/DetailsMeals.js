@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function DetailsRecipes() {
+export default function DetailsMeals() {
   return (
     <div>
-      DetailsRecipes
+      DetailsMeals
       {/* não é necessário o componente footer aqui */}
     </div>
   );
