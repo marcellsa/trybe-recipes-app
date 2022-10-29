@@ -1,17 +1,41 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import Context from '../context/Context';
+import fetchAPI from '../services/FetchAPI';
 
 export default function SearchBar() {
   const [radioValue, setRadioValue] = useState('');
-  const ApiSearchBar = () => {
+  const [responseSerch, setResponseSearch] = useState('');
+  console.log('resposta da Api', responseSerch);
 
+  const { inputSearch } = useContext(Context);
+
+  const ApiSearchBar = async () => {
+    if (radioValue === 'ingredient') {
+      const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputSearch}`;
+      const response = await fetchAPI(url);
+      return setResponseSearch(response);
+    }
+
+    if (radioValue === 'name') {
+      const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${inputSearch}`;
+      const response = await fetchAPI(url);
+      return setResponseSearch(response);
+    }
+
+    if (radioValue === 'first-letter' && inputSearch.length === 1) {
+      const url = `https://www.themealdb.com/api/json/v1/1/search.php?f=${inputSearch}`;
+      const response = await fetchAPI(url);
+      return setResponseSearch(response);
+    }
+    global.alert('Your search must have only 1 (one) character');
   };
 
   const handleChange = ({ target }) => {
     setRadioValue(target.value);
-    console.log(radioValue);
   };
+
   const handelClick = () => {
-    ApiSearchBar(radioValue);
+    ApiSearchBar();
   };
 
   return (

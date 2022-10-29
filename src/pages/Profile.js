@@ -1,26 +1,25 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 
 function Profile() {
-  const storage = JSON.parse(localStorage.getItem('user'));
-  const emailStorage = storage.email;
-  const history = useHistory();
+  // const storage = JSON.parse(localStorage.getItem('user'));
+  // const emailStorage = storage.email;
+  // const history = useHistory();
 
-  const clickDoneRecipes = () => {
-    history.push('/done-recipes');
-  };
+  // const clickDoneRecipes = () => {
+  //   history.push('/done-recipes');
+  // };
 
-  const clickFavoriteRecipes = () => {
-    history.push('/favorite-recipes');
-  };
+  // const clickFavoriteRecipes = () => {
+  //   history.push('/favorite-recipes');
+  // };
 
-  const handleLogout = () => {
-    localStorage.clear();
-    history.push('/');
-  };
+  // const handleLogout = () => {
+  //   localStorage.clear();
+  //   history.push('/');
+  // };
 
   return (
     <div>
@@ -28,7 +27,7 @@ function Profile() {
         Profile
       </Header>
 
-      <h2 data-testid="profile-email">{emailStorage}</h2>
+      {/* <h2 data-testid="profile-email">{emailStorage}</h2>
 
       <button
         type="button"
@@ -52,7 +51,7 @@ function Profile() {
         onClick={ handleLogout }
       >
         Logout
-      </button>
+      </button> */}
       <Footer />
     </div>
   );

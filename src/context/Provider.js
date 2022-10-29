@@ -5,7 +5,8 @@ import fetchAPI from '../services/FetchAPI';
 
 function Provider({ children }) {
   const [mealsRecipes, setmealsRecipes] = useState([]);
-
+  const [inputSearch, setInputSearch] = useState('');
+  // console.log(inputSearch);
   useEffect(() => {
     const getAPI = async (url) => {
       const result = await fetchAPI(url);
@@ -17,8 +18,10 @@ function Provider({ children }) {
   const context = useMemo(
     () => ({
       mealsRecipes,
+      inputSearch,
+      setInputSearch,
     }),
-    [mealsRecipes],
+    [inputSearch, mealsRecipes],
   );
   return (
     <Context.Provider value={ context }>
