@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
+import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom/cjs/react-router-dom.min';
 
 export default function Login() {
   // Configurando estados
