@@ -11,7 +11,7 @@ function Footer() {
       className="footer"
     >
       <Link to="/drinks">
-        <button data-testid="drinks-bottom-btn" type="button">3
+        <button data-testid="drinks-bottom-btn" type="button">
           <img src={ drinkIcon } alt="ícone de bebidas" />
         </button>
       </Link>
