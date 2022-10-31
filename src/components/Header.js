@@ -21,7 +21,7 @@ export default function Header({ children }) {
   const handleChange = ({ target }) => {
     setInputSearch(target.value);
   };
-  console.log(inputSearch);
+
   return (
     <div>
       <h1 data-testid="page-title">{ children }</h1>

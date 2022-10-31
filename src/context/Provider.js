@@ -6,7 +6,8 @@ import fetchAPI from '../services/FetchAPI';
 function Provider({ children }) {
   const [mealsRecipes, setmealsRecipes] = useState([]);
   const [inputSearch, setInputSearch] = useState('');
-  // console.log(inputSearch);
+  const [resultFilterDrinks, setResultFilterDrinks] = useState([]);
+  const [resultFilterMeals, setResultFilterMeals] = useState([]);
 
   useEffect(() => {
     const getAPI = async (url) => {
@@ -20,9 +21,13 @@ function Provider({ children }) {
     () => ({
       mealsRecipes,
       inputSearch,
+      resultFilterDrinks,
+      resultFilterMeals,
+      setResultFilterMeals,
+      setResultFilterDrinks,
       setInputSearch,
     }),
-    [inputSearch, mealsRecipes],
+    [inputSearch, mealsRecipes, resultFilterDrinks, resultFilterMeals],
   );
   return (
     <Context.Provider value={ context }>

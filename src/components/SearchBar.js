@@ -6,23 +6,49 @@ import fetchAPI from '../services/FetchAPI';
 export default function SearchBar() {
   const [radioValue, setRadioValue] = useState('');
   const [responseSerch, setResponseSearch] = useState([]);
-  // console.log('resposta da Api', responseSerch.meals[0].idMeal);
 
-  const { inputSearch } = useContext(Context);
+  const twelve = 12;
+  const error = 'Your search must have only 1 (one) character';
+  const showErro = 'Sorry, we haven\'t found any recipes for these filters.';
+
+  const {
+    inputSearch, setResultFilterDrinks,
+    setResultFilterMeals } = useContext(Context);
+
+  useEffect(() => {
+    const resultFilterResponseSearch = () => {
+      const resultMeals = responseSerch.meals?.slice(0, twelve);
+      const resultDrinks = responseSerch.drinks?.slice(0, twelve);
+      setResultFilterMeals(resultMeals);
+      setResultFilterDrinks(resultDrinks);
+    };
+    resultFilterResponseSearch();
+  }, [responseSerch.drinks, responseSerch.meals,
+    setResultFilterDrinks, setResultFilterMeals]);
 
   const history = useHistory();
   const { location: { pathname } } = history;
+
+  const handleChange = ({ target }) => {
+    setRadioValue(target.value);
+  };
 
   const ApiSearchBarMeals = async () => {
     if (radioValue === 'ingredient') {
       const url = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputSearch}`;
       const response = await fetchAPI(url);
+      if (response.meals === null) {
+        global.alert(showErro);
+      }
       return setResponseSearch(response);
     }
 
     if (radioValue === 'name') {
       const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${inputSearch}`;
       const response = await fetchAPI(url);
+      if (response.meals === null) {
+        global.alert(showErro);
+      }
       return setResponseSearch(response);
     }
 
@@ -32,19 +58,25 @@ export default function SearchBar() {
       return setResponseSearch(response);
     }
 
-    global.alert('Your search must have only 1 (one) character');
+    global.alert(error);
   };
 
   const ApiSearchBarDrinks = async () => {
     if (radioValue === 'ingredient') {
       const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputSearch}`;
       const response = await fetchAPI(url);
+      if (response.drinks === null) {
+        global.alert(showErro);
+      }
       return setResponseSearch(response);
     }
 
     if (radioValue === 'name') {
       const url = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputSearch}`;
       const response = await fetchAPI(url);
+      if (response.drinks === null) {
+        global.alert(showErro);
+      }
       return setResponseSearch(response);
     }
 
@@ -53,7 +85,7 @@ export default function SearchBar() {
       const response = await fetchAPI(url);
       return setResponseSearch(response);
     }
-    global.alert('Your search must have only 1 (one) character');
+    global.alert(error);
   };
 
   const vericaSeTelaDeDrinksOuMeals = () => {
@@ -65,11 +97,10 @@ export default function SearchBar() {
       return ApiSearchBarDrinks();
     }
   };
-
+  // redirect
   useEffect(() => {
     const redirect = () => {
       if (responseSerch.meals?.length === 1) {
-        // console.log('ok');
         history.push(`/meals/${responseSerch.meals[0].idMeal}`);
       }
       if (responseSerch.drinks?.length === 1) {
@@ -78,10 +109,6 @@ export default function SearchBar() {
     };
     redirect();
   });
-
-  const handleChange = ({ target }) => {
-    setRadioValue(target.value);
-  };
 
   const handelClick = () => {
     vericaSeTelaDeDrinksOuMeals();
