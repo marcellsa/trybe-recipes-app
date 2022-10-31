@@ -68,11 +68,11 @@
 }
 
 .footer {
+  background-color: red;
   bottom: 0;
+  color: white;
   left: 0;
   position: fixed;
-  background-color: red;
-  width: 100%;
-  color: white;
   text-align: center;
+  width: 100%;
 }
