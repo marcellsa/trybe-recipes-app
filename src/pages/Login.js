@@ -39,6 +39,7 @@ export default function Login() {
       }
     };
     isUserInfoValid();
+    localStorage.clear();
   }, [userInfo]);
 
   const { email, password } = userInfo;
