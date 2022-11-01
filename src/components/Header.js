@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
+import Context from '../context/Context';
 
 export default function Header({ children }) {
   const [showInput, setShowInput] = useState(false);
+  const { inputSearch, setInputSearch } = useContext(Context);
 
-  const history = useHistory();
-
-  const inputSeartch = () => {
+  const showInputSearch = () => {
     if (showInput === true) {
       setShowInput(false);
     } else {
@@ -17,20 +18,26 @@ export default function Header({ children }) {
     }
   };
 
+  const handleChange = ({ target }) => {
+    setInputSearch(target.value);
+  };
+
   return (
     <div>
       <h1 data-testid="page-title">{ children }</h1>
-      <button type="button" onClick={ () => history.push('/profile') }>
-        <img
-          src={ profileIcon }
-          alt="profile"
-          data-testid="profile-top-btn"
-        />
-      </button>
+      <Link to="/profile">
+        <button type="button" src={ profileIcon }>
+          <img
+            src={ profileIcon }
+            alt="profile"
+            data-testid="profile-top-btn"
+          />
+        </button>
+      </Link>
       {
         (children === 'Meals' || children === 'Drinks')
       && (
-        <button type="button" onClick={ inputSeartch }>
+        <button type="button" onClick={ showInputSearch }>
           <img
             src={ searchIcon }
             alt="search"
@@ -41,7 +48,15 @@ export default function Header({ children }) {
 
       {
         showInput && (
-          <input type="text" data-testid="search-input" />
+          <div>
+            <input
+              type="text"
+              data-testid="search-input"
+              onChange={ handleChange }
+              value={ inputSearch }
+            />
+            <SearchBar />
+          </div>
         )
       }
 
