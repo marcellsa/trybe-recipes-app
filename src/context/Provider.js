@@ -8,7 +8,8 @@ function Provider({ children }) {
   const [inputSearch, setInputSearch] = useState('');
   const [resultFilterDrinks, setResultFilterDrinks] = useState([]);
   const [resultFilterMeals, setResultFilterMeals] = useState([]);
-
+  const [recipesList, setRecipesList] = useState([]);
+  console.log('test pro', recipesList);
   useEffect(() => {
     const getAPI = async (url) => {
       const result = await fetchAPI(url);
@@ -23,11 +24,13 @@ function Provider({ children }) {
       inputSearch,
       resultFilterDrinks,
       resultFilterMeals,
+      recipesList,
+      setRecipesList,
       setResultFilterMeals,
       setResultFilterDrinks,
       setInputSearch,
     }),
-    [inputSearch, mealsRecipes, resultFilterDrinks, resultFilterMeals],
+    [inputSearch, mealsRecipes, recipesList, resultFilterDrinks, resultFilterMeals],
   );
   return (
     <Context.Provider value={ context }>
