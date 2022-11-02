@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Context from '../context/Context';
+import CardRecommedation from './CardRecommedation';
 
 export default function RecipeDetails() {
   const [details, setDetails] = useState([]);
-  const [num, setNum] = useState('');
-  const [recommendation, setRecommendation] = useState('');
-  console.log(recommendation);
+
+  const { setRecommendation,
+    idPathname, setIdPathname } = useContext(Context);
+  console.log(idPathname);
 
   const history = useHistory();
   const { pathname } = history.location;
 
   function getIdOnPathname(id) {
     const numsStr = id.replace(/[^0-9]/g, '');
-    setNum(numsStr);
+    setIdPathname(numsStr);
     return numsStr;
   }
 
@@ -30,21 +33,26 @@ export default function RecipeDetails() {
   }, [pathname, setDetails]);
 
   useEffect(() => {
+    const id = getIdOnPathname(pathname);
+    console.log(id);
     const fetchRecommendation = async () => {
-      const endPoint = pathname === `/meals/${num}`
+      const endPoint = pathname === `/meals/${id}`
         ? 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='
         : 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       const response = await fetch(endPoint);
       const result = await response.json();
-      setRecommendation(result);
+      const { meals, drinks } = result;
+      const type = meals || drinks;
+      const numCards = 6;
+      setRecommendation(type.slice(0, numCards));
     };
     fetchRecommendation();
-  }, [num, pathname]);
+  }, [pathname, setRecommendation]);
 
   return (
     <div>
       {/* Precisa ser refatorado */}
-      {(details?.length !== 0 && pathname === `/meals/${num}`)
+      {(details?.length !== 0 && pathname === `/meals/${idPathname}`)
           && (
             details.meals.map((e, i) => (
               <div key={ i }>
@@ -96,11 +104,10 @@ export default function RecipeDetails() {
               </div>
             ))
           )}
-      {(details?.length !== 0 && pathname === `/drinks/${num}`)
+      {(details?.length !== 0 && pathname === `/drinks/${idPathname}`)
           && (
             details.drinks.map((e, i) => (
               <div key={ i }>
-                <p>{i}</p>
                 <img
                   data-testid="recipe-photo"
                   src={ e.strDrinkThumb }
@@ -140,6 +147,7 @@ export default function RecipeDetails() {
               </div>
             ))
           )}
+      <CardRecommedation />
     </div>
   );
 }

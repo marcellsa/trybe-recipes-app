@@ -7,6 +7,16 @@
   text-align: center;
   width: 100%;
 }
-.list-ingredients {
+/* .list-ingredients {
   list-style: none;
+} */
+
+.btn-start-recipe {
+  bottom: 0;
+  color: red;
+  left: 0;
+  position: fixed;
+  text-align: center;
+  width: 100%;
 }
+
