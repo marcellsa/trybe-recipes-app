@@ -9,7 +9,7 @@ function Provider({ children }) {
   const [resultFilterDrinks, setResultFilterDrinks] = useState([]);
   const [resultFilterMeals, setResultFilterMeals] = useState([]);
   const [recipesList, setRecipesList] = useState([]);
-  console.log('test pro', recipesList);
+  // console.log('test pro', recipesList);
   useEffect(() => {
     const getAPI = async (url) => {
       const result = await fetchAPI(url);

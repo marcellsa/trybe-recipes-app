@@ -127,7 +127,6 @@ function Recipes() {
                       className="card-img"
                       src={ recipe[objNames.image] }
                       alt={ `${recipe.strMeal} imagem` }
-                      id={ recipe.idMeal }
                     />
                   </div>
                 </Link>
