@@ -4,7 +4,9 @@ import { useHistory } from 'react-router-dom';
 export default function RecipeDetails() {
   const [details, setDetails] = useState([]);
   const [num, setNum] = useState('');
-  console.log(details);
+  const [recommendation, setRecommendation] = useState('');
+  console.log(recommendation);
+
   const history = useHistory();
   const { pathname } = history.location;
 
@@ -26,6 +28,18 @@ export default function RecipeDetails() {
     };
     fetchIdRecipe();
   }, [pathname, setDetails]);
+
+  useEffect(() => {
+    const fetchRecommendation = async () => {
+      const endPoint = pathname === `/meals/${num}`
+        ? 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='
+        : 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+      const response = await fetch(endPoint);
+      const result = await response.json();
+      setRecommendation(result);
+    };
+    fetchRecommendation();
+  }, [num, pathname]);
 
   return (
     <div>
