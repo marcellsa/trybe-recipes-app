@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 export default function RecipeDetails() {
@@ -14,7 +14,7 @@ export default function RecipeDetails() {
     return numsStr;
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const id = getIdOnPathname(pathname);
     const fetchIdRecipe = async () => {
       const endPoint = pathname === `/meals/${id}`
@@ -25,15 +25,15 @@ export default function RecipeDetails() {
       setDetails(result);
     };
     fetchIdRecipe();
-  }, [pathname]);
+  }, [pathname, setDetails]);
 
   return (
     <div>
-
-      {(details?.length > 0 && pathname === `/meals/${num}`)
+      {/* Precisa ser refatorado */}
+      {(details?.length !== 0 && pathname === `/meals/${num}`)
           && (
             details.meals.map((e, i) => (
-              <div key={ e.idMeal }>
+              <div key={ i }>
                 <img
                   data-testid="recipe-photo"
                   src={ e.strMealThumb }
@@ -41,14 +41,33 @@ export default function RecipeDetails() {
                 />
                 <p data-testid="recipe-title">{e.strMeal}</p>
                 <p data-testid="recipe-category">{`Category: ${e.strCategory}`}</p>
-                <ul data-testid={ `${i}-ingredient-name-and-measure` }>
-
+                <div>
                   {
-                    Object.keys(details.meals[0]).filter((el) => (
-                      el.includes('strIngredient') && details.meals[0][el].length !== 0))
-                      .map((elem, ind) => <li key={ ind }>{details.meals[0][elem]}</li>)
+                    Object.keys(e).filter((el) => (
+                      el.includes('strIngredient') && e[el] !== ''))
+                      .map((elem, ind) => (
+                        <p
+                          data-testid={ `${ind}-ingredient-name-and-measure` }
+                          key={ ind }
+                        >
+                          {e[elem]}
+                        </p>))
                   }
-                </ul>
+                </div>
+                <div>
+                  {
+                    Object.keys(e).filter((el) => (
+                      el.includes('strMeasure') && e[el] !== ''))
+                      .map((elem, ind) => (
+                        <p
+                          className="list-measure"
+                          data-testid={ `${ind}-ingredient-name-and-measure` }
+                          key={ ind }
+                        >
+                          {e[elem]}
+                        </p>))
+                  }
+                </div>
                 <p data-testid="instructions">{e.strInstructions}</p>
                 {console.log(e.strYoutube)}
                 <div>
@@ -63,25 +82,46 @@ export default function RecipeDetails() {
               </div>
             ))
           )}
-      {(details?.length > 0 && pathname === `/drinks/${num}`)
+      {(details?.length !== 0 && pathname === `/drinks/${num}`)
           && (
             details.drinks.map((e, i) => (
-              <div key={ e.idDrink }>
+              <div key={ i }>
+                <p>{i}</p>
                 <img
                   data-testid="recipe-photo"
                   src={ e.strDrinkThumb }
                   alt={ e.strDrink }
                 />
                 <p data-testid="recipe-title">{e.strDrink}</p>
-                <p data-testid="recipe-category">{`Category: ${e.strCategory}`}</p>
-                <ul data-testid={ `${i}-ingredient-name-and-measure` }>
-                  {console.log(Object.keys(details.drinks[0]))}
+                <p data-testid="recipe-category">{e.strAlcoholic}</p>
+                <div className="list-ingedients">
                   {
-                    Object.keys(details.drinks[0]).filter((el) => (
-                      el.includes('strIngredient') && details.drinks[0][el] !== null))
-                      .map((elem, ind) => <li key={ ind }>{details.drinks[0][elem]}</li>)
+                    Object.keys(e).filter((el) => (
+                      el.includes('strIngredient') && e[el] !== null))
+                      .map((elem, ind) => (
+                        <p
+                          className="list-ingredients-drinks"
+                          data-testid={ `${ind}-ingredient-name-and-measure` }
+                          key={ ind }
+                        >
+                          {e[elem]}
+                        </p>))
                   }
-                </ul>
+                </div>
+                <div>
+                  {
+                    Object.keys(e).filter((el) => (
+                      el.includes('strMeasure') && e[el] !== null))
+                      .map((elem, ind) => (
+                        <p
+                          className="list-measure-drinks"
+                          data-testid={ `${ind}-ingredient-name-and-measure` }
+                          key={ ind }
+                        >
+                          {e[elem]}
+                        </p>))
+                  }
+                </div>
                 <p data-testid="instructions">{e.strInstructions}</p>
               </div>
             ))
