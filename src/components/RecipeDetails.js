@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../context/Context';
 import ButtonFavoriteAndShare from './ButtonFavoriteAndShare';
@@ -13,11 +13,11 @@ export default function RecipeDetails() {
   const history = useHistory();
   const { pathname } = history.location;
 
-  function getIdOnPathname(id) {
+  const getIdOnPathname = useCallback((id) => {
     const numsStr = id.replace(/[^0-9]/g, '');
     setIdPathname(numsStr);
     return numsStr;
-  }
+  }, [setIdPathname]);
 
   useEffect(() => {
     const id = getIdOnPathname(pathname);
@@ -30,7 +30,7 @@ export default function RecipeDetails() {
       setDetails(result);
     };
     fetchIdRecipe();
-  }, [pathname, setDetails]);
+  }, [getIdOnPathname, pathname, setDetails]);
 
   useEffect(() => {
     const id = getIdOnPathname(pathname);
@@ -46,7 +46,7 @@ export default function RecipeDetails() {
       setRecommendation(type.slice(0, numCards));
     };
     fetchRecommendation();
-  }, [pathname, setRecommendation]);
+  }, [getIdOnPathname, pathname, setRecommendation]);
 
   return (
     <div>

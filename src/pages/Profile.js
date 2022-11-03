@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-function Profile() {
+export default function Profile() {
   const storage = JSON.parse(localStorage.getItem('user'));
   const emailStorage = storage?.email || 'Nenhum usuário encontrado';
   const history = useHistory();
@@ -56,4 +56,3 @@ function Profile() {
     </div>
   );
 }
-export default Profile;

@@ -7,9 +7,6 @@
   text-align: center;
   width: 100%;
 }
-/* .list-ingredients {
-  list-style: none;
-} */
 
 .btn-start-recipe {
   bottom: 0;
@@ -22,7 +19,7 @@
 
 .btn-favorite {
   background-color: transparent;
-  border: 1px solid #ffffff00;
+  border: 1px solid #fff0;
   cursor: pointer;
   height: 50px;
   width: 50px;
