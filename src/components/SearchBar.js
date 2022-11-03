@@ -110,7 +110,7 @@ export default function SearchBar() {
     redirect();
   });
 
-  const handelClick = () => {
+  const handleClick = () => {
     vericaSeTelaDeDrinksOuMeals();
   };
 
@@ -148,7 +148,7 @@ export default function SearchBar() {
           type="button"
           id="btnSearch"
           value="SEARCH"
-          onClick={ handelClick }
+          onClick={ handleClick }
         />
       </p>
     </div>

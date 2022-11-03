@@ -15,7 +15,7 @@ function Footer() {
           <img src={ drinkIcon } alt="ícone de bebidas" data-testid="drinks-bottom-btn" />
         </button>
       </Link>
-/home/arthutepio/projetos-trybe/sd-024-b-project-recipes-app/src/components/Footer.js
+
       <Link to="/meals">
         <button type="button">
           <img src={ mealIcon } alt="ícone de comidas" data-testid="meals-bottom-btn" />
