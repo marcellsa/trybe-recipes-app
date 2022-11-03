@@ -11,7 +11,7 @@ function Provider({ children }) {
   const [recipesList, setRecipesList] = useState([]);
   const [idPathname, setIdPathname] = useState('');
   const [recommendation, setRecommendation] = useState('');
-  // console.log('test pro', recipesList);
+
   useEffect(() => {
     const getAPI = async (url) => {
       const result = await fetchAPI(url);

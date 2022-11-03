@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../context/Context';
+import ButtonFavoriteAndShare from './ButtonFavoriteAndShare';
 import CardRecommedation from './CardRecommedation';
 
 export default function RecipeDetails() {
@@ -8,7 +9,6 @@ export default function RecipeDetails() {
 
   const { setRecommendation,
     idPathname, setIdPathname } = useContext(Context);
-  console.log(idPathname);
 
   const history = useHistory();
   const { pathname } = history.location;
@@ -34,7 +34,6 @@ export default function RecipeDetails() {
 
   useEffect(() => {
     const id = getIdOnPathname(pathname);
-    console.log(id);
     const fetchRecommendation = async () => {
       const endPoint = pathname === `/meals/${id}`
         ? 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='
@@ -51,6 +50,7 @@ export default function RecipeDetails() {
 
   return (
     <div>
+      <ButtonFavoriteAndShare />
       {/* Precisa ser refatorado */}
       {(details?.length !== 0 && pathname === `/meals/${idPathname}`)
           && (

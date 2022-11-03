@@ -20,3 +20,11 @@
   width: 100%;
 }
 
+.btn-favorite {
+  background-color: transparent;
+  border: 1px solid #ffffff00;
+  cursor: pointer;
+  height: 50px;
+  width: 50px;
+}
+

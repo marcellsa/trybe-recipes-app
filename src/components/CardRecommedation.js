@@ -1,19 +1,18 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import Carousel from 'react-bootstrap/Carousel';
+import { Carousel, CarouselItem } from 'react-bootstrap';
 import Context from '../context/Context';
-import 'bootstrap/dist/css/bootstrap.css';
+import ButtonStartRecipe from './ButtonStartRecipe';
 
 export default function CardRecommedation() {
   const { recommendation } = useContext(Context);
-  console.log(recommendation);
 
   const history = useHistory();
   const { pathname } = history.location;
-  console.log(pathname);
+
   return (
     <div>
-      <div>
+      <Carousel>
         {
           recommendation?.length !== 0
           && recommendation.map((e, i) => {
@@ -28,35 +27,22 @@ export default function CardRecommedation() {
               name: 'strDrink',
               image: 'strDrinkThumb',
             };
-            // console.log([objNames.image]);
+
             return (
-              <div
-                key={ e.idMeal }
-                style={ { display: 'block', width: 700, padding: 30 } }
-              >
-                <Carousel>
-                  <Carousel.Item>
-                    <img
-                      className="d-block w-100"
-                      src={ e[objNames.image] }
-                      alt={ `${e[objNames.name]} imagem` }
-                    />
-                  </Carousel.Item>
-                </Carousel>
-                <p data-testid={ `${i}-recommendation-title` }>{e[objNames.name]}</p>
-              </div>
+              <CarouselItem data-testid={ `${i}-recommendation-card` } key={ i }>
+                <h5 data-testid={ `${i}-recommendation-title` }>
+                  <img
+                    className="d-block w-100"
+                    src={ e[objNames.image] }
+                    alt={ `${e[objNames.name]} imagem` }
+                  />
+                </h5>
+              </CarouselItem>
             );
           })
         }
-      </div>
-      <button
-        className="btn-start-recipe"
-        data-testid="start-recipe-btn"
-        type="button"
-      >
-        Start Recipe
-
-      </button>
+      </Carousel>
+      <ButtonStartRecipe />
     </div>
   );
 }
