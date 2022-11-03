@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import Context from '../context/Context';
 
 function Recipes() {
-  const [recipesList, setRecipesList] = useState([]);
+  // const [recipesList, setRecipesList] = useState([]);
   const [categoriesList, setCategoriesList] = useState([]);
   const [selCategory, setSelCategory] = useState('');
   const [filteredCategory, setFilteredCategory] = useState('');
+
+  const { recipesList, setRecipesList } = useContext(Context);
 
   const mealsEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const drinksEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -26,7 +29,7 @@ function Recipes() {
       setRecipesList(type.slice(0, numCards));
     };
     fetchRecipes();
-  }, [pathname]);
+  }, [pathname, setRecipesList]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -134,4 +137,5 @@ function Recipes() {
     </div>
   );
 }
+
 export default Recipes;

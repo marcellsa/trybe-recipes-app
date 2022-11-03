@@ -1,10 +1,11 @@
 import React from 'react';
+import RecipeDetails from '../components/RecipeDetails';
 
 export default function DetailsDrinks() {
   return (
     <div>
       DetailsDrinks
-      {/* não é necessário o componente footer aqui */}
+      <RecipeDetails />
     </div>
   );
 }
