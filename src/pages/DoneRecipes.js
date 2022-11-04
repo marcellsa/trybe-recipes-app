@@ -2,18 +2,35 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 
-const MOCK_TEST = {
-  idMeal: '52977',
-  strArea: 'Turkish',
-  strCategory: 'Side',
-  strMeal: 'Corba',
-  strMealThumb: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
-  strTags: 'Soup',
-};
+const MOCK_TEST = [
+  {
+    idMeal: '52977',
+    strArea: 'Turkish',
+    strCategory: 'Side',
+    strMeal: 'Corba',
+    strMealThumb: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
+    strTags: 'Soup',
+  },
+  {
+    idMeal: '53026',
+    strArea: 'Egyptian',
+    strCategory: 'Vegetarian',
+    strMeal: 'Tamiya',
+    strMealThumb: 'https://www.themealdb.com/images/media/meals/n3xxd91598732796.jpg',
+    strTags: null,
+  },
+  {
+    idDrink: '15997',
+    strCategory: 'Ordinary Drink',
+    strDrink: 'GG',
+    strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg',
+    strTags: null,
+  },
+];
 
 export default function DoneRecipes() {
-  const [filter, setFilter] = useState('All');
-  const [result, setResult] = usaState([]);
+  const [filterButton, setFilterButton] = useState('All');
+  const [results, setResults] = usaState([]);
 
   const getDoneRecipes = () => {
     localStorage.setItem('doneRecipes', JSON.stringify(MOCK_TEST));
@@ -21,23 +38,26 @@ export default function DoneRecipes() {
     return JSON.parse(doneRecipesKey);
   };
 
-  const handleFilterChange = useCallback(() => {
+  const handleFilterButtonChange = useCallback(() => {
     const localStorageData = getDoneRecipes();
-    if (filter !== 'All') {
-      const newResult = localStorage.filter(({ type }) => type === filter);
-      setResult(newResult);
+    if (filterButton === 'Meals') {
+      const newResult = localStorage.filter((recipe) => recipe.includes(recipe.idMeal));
+      setResults(newResult);
+    } else if (filterButton === 'Drinks') {
+      const newResult = localStorage.filter((recipe) => recipe.includes(recipe.idDrink));
+      setResults(newResult);
     } else {
-      setResult(localStorageData);
+      setResults(localStorageData);
     }
-  }, [filter, setResult]);
+  }, [filterButton, setResults]);
 
   useEffect(() => {
     getDoneRecipes();
   }, []);
 
   useEffect(() => {
-    handleFilterChange();
-  }, [handleFilterChange]);
+    handleFilterButtonChange();
+  }, [handleFilterButtonChange]);
 
   return (
     <div>
@@ -47,32 +67,32 @@ export default function DoneRecipes() {
       <button
         data-testid="filter-by-all-btn"
         type="button"
-        onClick={ () => setFilter('All') }
+        onClick={ () => setFilterButton('All') }
       >
         All
       </button>
       <button
         data-testid="filter-by-meal-btn"
         type="button"
-        onClick={ () => setFilter('Meals') }
+        onClick={ () => setFilterButton('Meals') }
       >
         Meals
       </button>
       <button
         data-testid="filter-by-drink-btn"
         type="button"
-        onClick={ () => setFilter('Drinks') }
+        onClick={ () => setFilterButton('Drinks') }
       >
         Drinks
       </button>
 
-      {result?.map((recipe, index) => (
+      {results?.map((recipe, index) => (
         <div key={ recipe.id }>
           <Link
             to={
-              recipe.type === 'meal'
-                ? `/meals/${recipe.id}`
-                : `/drinks/${recipe.id}`
+              recipe.includes(recipe.idMeal)
+                ? `/meals/${recipe.idMeal}`
+                : `/drinks/${recipe.idDrink}`
             }
           >
             <img
