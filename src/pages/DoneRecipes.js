@@ -100,7 +100,13 @@ export default function DoneRecipes() {
             alt="imagem da receita"
             width="250px"
           />
-          <p data-testid={ `${index}-horizontal-top-text` }>{recipe.category}</p>
+          <p data-testid={ `${index}-horizontal-top-text` }>
+            (
+            {recipe.type === 'meal'
+              ? `${recipe.nationality} - ${recipe.category}`
+              : `${recipe.alcoholicOrNot}`}
+            )
+          </p>
           <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
           <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
           <img
