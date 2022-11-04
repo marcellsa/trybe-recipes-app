@@ -33,7 +33,7 @@ localStorage.setItem('doneRecipes', JSON.stringify(DONE_RECIPES_KEY_TEST));
 
 export default function DoneRecipes() {
   const [filterButton, setFilterButton] = useState('All');
-  const [localStorageData, setLocalStorageData] = usaState([]);
+  const [localStorageData, setLocalStorageData] = useState([]);
 
   const getDoneRecipes = () => {
     const doneRecipesInfo = localStorage.getItem('doneRecipes');
