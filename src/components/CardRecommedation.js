@@ -31,6 +31,7 @@ export default function CardRecommedation() {
             return (
               <CarouselItem data-testid={ `${i}-recommendation-card` } key={ i }>
                 <h5 data-testid={ `${i}-recommendation-title` }>
+                  { e[objNames.name] }
                   <img
                     className="d-block w-100"
                     src={ e[objNames.image] }

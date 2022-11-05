@@ -7,7 +7,6 @@ export default function ButtonStartRecipe() {
   const id = pathname.replace(/[^0-9]/g, '');
 
   const handleClick = () => {
-    console.log('ok');
     if (pathname.includes('meals')) {
       history.push(`/meals/${id}/in-progress`);
     } else {
@@ -16,7 +15,7 @@ export default function ButtonStartRecipe() {
   };
 
   // const handleDisable = () => {
-  //   const recipes = JSON.parse(localStorage.getItem('recepiesDone'));
+  //   const recipes = JSON.parse(localStorage.getItem('doneRecipes'));
   //   const result = recipes.some((e) => e.id === id);
   //   return result;
   // };
@@ -26,13 +25,14 @@ export default function ButtonStartRecipe() {
 
       <button
         // disabled={ handleDisable }
-        onClick={ handleClick }
         className="btn-start-recipe"
+        onClick={ handleClick }
         data-testid="start-recipe-btn"
         type="button"
       >
         Start Recipe
       </button>
+
     </div>
   );
 }

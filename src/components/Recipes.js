@@ -113,7 +113,7 @@ function Recipes() {
               };
               return (
                 <Link
-                  key={ recipe[objNames.id] }
+                  key={ index }
                   to={ `${pathname}/${recipe[objNames.id]}` }
                 >
                   <div

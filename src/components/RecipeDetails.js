@@ -1,26 +1,20 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../context/Context';
 import ButtonFavoriteAndShare from './ButtonFavoriteAndShare';
 import CardRecommedation from './CardRecommedation';
 
 export default function RecipeDetails() {
-  const [details, setDetails] = useState([]);
-
   const { setRecommendation,
-    idPathname, setIdPathname } = useContext(Context);
+    idPathname, details, setDetails } = useContext(Context);
 
   const history = useHistory();
   const { pathname } = history.location;
+  // console.log(pathname);
 
-  const getIdOnPathname = useCallback((id) => {
-    const numsStr = id.replace(/[^0-9]/g, '');
-    setIdPathname(numsStr);
-    return numsStr;
-  }, [setIdPathname]);
+  const id = pathname.replace(/[^0-9]/g, '');
 
   useEffect(() => {
-    const id = getIdOnPathname(pathname);
     const fetchIdRecipe = async () => {
       const endPoint = pathname === `/meals/${id}`
         ? `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
@@ -30,10 +24,9 @@ export default function RecipeDetails() {
       setDetails(result);
     };
     fetchIdRecipe();
-  }, [getIdOnPathname, pathname, setDetails]);
+  }, [id, pathname, setDetails]);
 
   useEffect(() => {
-    const id = getIdOnPathname(pathname);
     const fetchRecommendation = async () => {
       const endPoint = pathname === `/meals/${id}`
         ? 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='
@@ -46,23 +39,36 @@ export default function RecipeDetails() {
       setRecommendation(type.slice(0, numCards));
     };
     fetchRecommendation();
-  }, [getIdOnPathname, pathname, setRecommendation]);
+  }, [id, pathname, setRecommendation]);
 
   return (
     <div>
       <ButtonFavoriteAndShare />
-      {/* Precisa ser refatorado */}
-      {(details?.length !== 0 && pathname === `/meals/${idPathname}`)
-          && (
-            details.meals.map((e, i) => (
-              <div key={ i }>
+      {(details.drinks || details.meals)
+          && (details.meals || details.drinks).map((e) => {
+            const objNames = pathname === `/meals/${id}` ? {
+              id: 'idMeal',
+              name: 'strMeal',
+              image: 'strMealThumb',
+              category: 'strCategory',
+              instructions: 'strInstructions',
+              youtube: 'strYoutube',
+            } : {
+              id: 'idDrink',
+              name: 'strDrink',
+              image: 'strDrinkThumb',
+              category: 'strAlcoholic',
+              instructions: 'strInstructions',
+            };
+            return (
+              <div key={ `${e[objNames.id]}` }>
                 <img
                   data-testid="recipe-photo"
-                  src={ e.strMealThumb }
-                  alt={ e.strMeal }
+                  src={ e[objNames.image] }
+                  alt={ e[objNames.name] }
                 />
-                <p data-testid="recipe-title">{e.strMeal}</p>
-                <p data-testid="recipe-category">{`Category: ${e.strCategory}`}</p>
+                <p data-testid="recipe-title">{e[objNames.name]}</p>
+                <p data-testid="recipe-category">{`Category: ${e[objNames.category]}`}</p>
                 <div>
                   {
                     Object.keys(e).filter((el) => (
@@ -90,63 +96,18 @@ export default function RecipeDetails() {
                         </p>))
                   }
                 </div>
-                <p data-testid="instructions">{e.strInstructions}</p>
-                {console.log(e.strYoutube)}
-                <div>
+                <p data-testid="instructions">{e[objNames.instructions]}</p>
+
+                {pathname === `/meals/${idPathname}` && (
                   <iframe
                     data-testid="video"
-                    width="100%"
-                    height="425"
-                    title={ e.strMeal }
+                    title={ e[objNames.name] }
                     src={ e.strYoutube.replace('watch?v=', 'embed/') }
-                  />
-                </div>
+                  />)}
+
               </div>
-            ))
-          )}
-      {(details?.length !== 0 && pathname === `/drinks/${idPathname}`)
-          && (
-            details.drinks.map((e, i) => (
-              <div key={ i }>
-                <img
-                  data-testid="recipe-photo"
-                  src={ e.strDrinkThumb }
-                  alt={ e.strDrink }
-                />
-                <p data-testid="recipe-title">{e.strDrink}</p>
-                <p data-testid="recipe-category">{e.strAlcoholic}</p>
-                <div className="list-ingedients">
-                  {
-                    Object.keys(e).filter((el) => (
-                      el.includes('strIngredient') && e[el] !== null))
-                      .map((elem, ind) => (
-                        <p
-                          className="list-ingredients-drinks"
-                          data-testid={ `${ind}-ingredient-name-and-measure` }
-                          key={ ind }
-                        >
-                          {e[elem]}
-                        </p>))
-                  }
-                </div>
-                <div>
-                  {
-                    Object.keys(e).filter((el) => (
-                      el.includes('strMeasure') && e[el] !== null))
-                      .map((elem, ind) => (
-                        <p
-                          className="list-measure-drinks"
-                          data-testid={ `${ind}-ingredient-name-and-measure` }
-                          key={ ind }
-                        >
-                          {e[elem]}
-                        </p>))
-                  }
-                </div>
-                <p data-testid="instructions">{e.strInstructions}</p>
-              </div>
-            ))
-          )}
+            );
+          })}
       <CardRecommedation />
     </div>
   );
