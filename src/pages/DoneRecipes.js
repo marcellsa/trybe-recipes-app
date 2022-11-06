@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 
@@ -101,18 +101,28 @@ export default function DoneRecipes() {
 
       {localStorageData.length !== 0 && localStorageData.map((recipe, index) => (
         <div key={ index }>
-          <img
-            data-testid={ `${index}-horizontal-image` }
-            src={ recipe.image }
-            alt="imagem da receita"
-            width="250px"
-          />
+          <Link
+            to={ recipe.type === 'meal'
+              ? `/meals/${recipe.id}` : `/drinks/${recipe.id}` }
+          >
+            <img
+              data-testid={ `${index}-horizontal-image` }
+              src={ recipe.image }
+              alt="imagem da receita"
+              width="250px"
+            />
+          </Link>
           <p data-testid={ `${index}-horizontal-top-text` }>
             {recipe.type === 'meal'
               ? `${recipe.nationality} - ${recipe.category}`
               : `${recipe.alcoholicOrNot}`}
           </p>
-          <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
+          <Link
+            to={ recipe.type === 'meal'
+              ? `/meals/${recipe.id}` : `/drinks/${recipe.id}` }
+          >
+            <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
+          </Link>
           <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
 
           <button type="button" onClick={ handleShareIcon }>
