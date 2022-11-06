@@ -12,7 +12,7 @@ function Provider({ children }) {
   const [idPathname, setIdPathname] = useState('');
   const [recommendation, setRecommendation] = useState('');
   const [details, setDetails] = useState({});
-  // const [mealsOrDrink, setMealsOrDrink] = useState('');
+  const [isDisableImg, setIsDisableImg] = useState(true);
 
   useEffect(() => {
     const getAPI = async (url) => {
@@ -32,7 +32,8 @@ function Provider({ children }) {
       recommendation,
       idPathname,
       details,
-
+      isDisableImg,
+      setIsDisableImg,
       setDetails,
       setIdPathname,
       setRecommendation,
@@ -42,7 +43,8 @@ function Provider({ children }) {
       setInputSearch,
     }),
     [details, idPathname, inputSearch,
-      mealsRecipes, recipesList, recommendation, resultFilterDrinks, resultFilterMeals],
+      isDisableImg, mealsRecipes,
+      recipesList, recommendation, resultFilterDrinks, resultFilterMeals],
   );
   return (
     <Context.Provider value={ context }>

@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-export default function ButtonStartRecipe() {
+export default function ButtonStartRecipe({ name }) {
   const history = useHistory();
   const { pathname } = history.location;
   const id = pathname.replace(/[^0-9]/g, '');
@@ -30,9 +31,13 @@ export default function ButtonStartRecipe() {
         data-testid="start-recipe-btn"
         type="button"
       >
-        Start Recipe
+        { name }
       </button>
 
     </div>
   );
 }
+
+ButtonStartRecipe.propTypes = {
+  name: PropTypes.string.isRequired,
+};

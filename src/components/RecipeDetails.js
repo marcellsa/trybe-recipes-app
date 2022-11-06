@@ -1,18 +1,33 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../context/Context';
 import ButtonFavoriteAndShare from './ButtonFavoriteAndShare';
 import CardRecommedation from './CardRecommedation';
+import ButtonStartRecipe from './ButtonStartRecipe';
 
 export default function RecipeDetails() {
-  const { setRecommendation,
-    idPathname, details, setDetails } = useContext(Context);
+  const [doneRecipes, setDoneRecipes] = useState(false);
+  const [buttonStartName, setButtonStartName] = useState('Start Recipe');
+
+  const { setRecommendation, details, setDetails } = useContext(Context);
 
   const history = useHistory();
   const { pathname } = history.location;
-  // console.log(pathname);
 
   const id = pathname.replace(/[^0-9]/g, '');
+  // requito 30
+  useEffect(() => {
+    const path = pathname.includes('meals') ? 'meals' : 'drinks';
+    const storageDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (storageDoneRecipes) setDoneRecipes(storageDoneRecipes.some((e) => e.id === id));
+
+    const storageProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (storageProgressRecipes) {
+      Object.keys(storageProgressRecipes[path]).forEach((e) => {
+        if (e === id) setButtonStartName('Continue Recipe');
+      });
+    }
+  }, [id, pathname]);
 
   useEffect(() => {
     const fetchIdRecipe = async () => {
@@ -98,7 +113,7 @@ export default function RecipeDetails() {
                 </div>
                 <p data-testid="instructions">{e[objNames.instructions]}</p>
 
-                {pathname === `/meals/${idPathname}` && (
+                {pathname === `/meals/${id}` && (
                   <iframe
                     data-testid="video"
                     title={ e[objNames.name] }
@@ -109,6 +124,9 @@ export default function RecipeDetails() {
             );
           })}
       <CardRecommedation />
+      {
+        !doneRecipes && <ButtonStartRecipe name={ buttonStartName } />
+      }
     </div>
   );
 }

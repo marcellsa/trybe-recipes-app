@@ -16,7 +16,7 @@ export default function ButtonFavoriteAndShare() {
   const mealOrDrink = pathname.slice(1, six) === 'meals' ? 'meals' : 'drinks';
 
   const { details } = useContext(Context);
-
+  // PRECISA SER REFATORADO
   useEffect(() => {
     if (Object.keys(details)[0] === mealOrDrink) {
       const objFavoriteRecipes = {
@@ -31,8 +31,6 @@ export default function ButtonFavoriteAndShare() {
         image: mealOrDrink === 'meals'
           ? details.meals[0].strMealThumb : details.drinks[0].strDrinkThumb,
       };
-      // const storage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-      // setFavorite(storage.some((e) => e.id === id));
       setFavoriteRecipes(objFavoriteRecipes);
     }
   }, [details, mealOrDrink]);
@@ -40,7 +38,7 @@ export default function ButtonFavoriteAndShare() {
   useEffect(() => {
     const storage = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (storage) setFavorite(storage.some((e) => e.id === id));
-  }, []);
+  }, [id]);
 
   const checkIfIsFavorite = () => (favorite ? blackHeartIcon : whiteHeartIcon);
 

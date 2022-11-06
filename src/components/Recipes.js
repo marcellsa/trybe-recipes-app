@@ -8,7 +8,8 @@ function Recipes() {
   const [selCategory, setSelCategory] = useState('');
   const [filteredCategory, setFilteredCategory] = useState('');
 
-  const { recipesList, setRecipesList } = useContext(Context);
+  const { recipesList, setRecipesList,
+    isDisableImg, setIsDisableImg } = useContext(Context);
 
   const mealsEndPoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
   const drinksEndPoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
@@ -26,10 +27,11 @@ function Recipes() {
       const { meals, drinks } = results;
       const type = meals || drinks;
       const numCards = 12;
+      setIsDisableImg(true);
       setRecipesList(type.slice(0, numCards));
     };
     fetchRecipes();
-  }, [pathname, setRecipesList]);
+  }, [pathname, setIsDisableImg, setRecipesList]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -39,10 +41,11 @@ function Recipes() {
       const { meals, drinks } = results;
       const type = meals || drinks;
       const numCards = 5;
+      setIsDisableImg(true);
       setCategoriesList(type.slice(0, numCards));
     };
     fetchCategories();
-  }, [pathname]);
+  }, [pathname, setIsDisableImg]);
 
   useEffect(() => {
     if (selCategory) {
@@ -54,13 +57,14 @@ function Recipes() {
         const { meals, drinks } = results;
         const type = meals || drinks;
         const numCards = 12;
+        setIsDisableImg(true);
         setFilteredCategory(type.slice(0, numCards));
       };
       fetchFiltered();
     } else {
       setFilteredCategory('');
     }
-  }, [selCategory, pathname]);
+  }, [selCategory, pathname, setIsDisableImg]);
 
   const filterCategory = (event) => {
     if (selCategory === event.target.innerText) {
@@ -98,9 +102,12 @@ function Recipes() {
           All
         </button>
       </div>
-      <div>
-        {
-          (filteredCategory || recipesList)
+      {
+        isDisableImg
+
+      && (
+        <div>
+          {(filteredCategory || recipesList)
             .map((recipe, index) => {
               const objNames = pathname === '/meals' ? {
                 id: 'idMeal',
@@ -124,16 +131,17 @@ function Recipes() {
                     <p data-testid={ `${index}-card-name` }>{recipe[objNames.name]}</p>
                     <img
                       data-testid={ `${index}-card-img` }
-                      className="card-img"
+                      // className="card-img"
                       src={ recipe[objNames.image] }
                       alt={ `${recipe.strMeal} imagem` }
                     />
                   </div>
                 </Link>
               );
-            })
-        }
-      </div>
+            })}
+        </div>
+      )
+      }
     </div>
   );
 }

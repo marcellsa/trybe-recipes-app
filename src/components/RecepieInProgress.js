@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
-import Context from '../context/Context';
+import React from 'react';
+// import Context from '../context/Context';
 
 export default function RecipeInProgress() {
-  const { recipesList } = useContext(Context);
-  console.log(recipesList);
+  // const { recipesList } = useContext(Context);
+
   return (
     <div>
-      <div>
+      <h1>Italo lacerda</h1>
+      {/* <div>
         <img
           src={ recipesList[0].strMealThumb || recipesList[0].strDrinkThumb }
           alt={ recipesList[0].strMeal || recipesList[0].strDrink }
@@ -16,7 +17,7 @@ export default function RecipeInProgress() {
           {recipesList[0].strMeal
         || recipesList[0].strDrink}
         </p>
-      </div>
+      </div> */}
     </div>
   );
 }
