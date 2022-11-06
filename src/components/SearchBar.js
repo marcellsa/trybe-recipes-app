@@ -13,7 +13,7 @@ export default function SearchBar() {
 
   const {
     inputSearch, setResultFilterDrinks,
-    setResultFilterMeals } = useContext(Context);
+    setResultFilterMeals, setIsDisableImg } = useContext(Context);
 
   useEffect(() => {
     const resultFilterResponseSearch = () => {
@@ -111,6 +111,7 @@ export default function SearchBar() {
   });
 
   const handleClick = () => {
+    setIsDisableImg(false);
     vericaSeTelaDeDrinksOuMeals();
   };
 
