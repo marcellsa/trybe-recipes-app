@@ -34,6 +34,7 @@ localStorage.setItem('doneRecipes', JSON.stringify(DONE_RECIPES_KEY_TEST));
 export default function DoneRecipes() {
   const [filterButton, setFilterButton] = useState('All');
   const [localStorageData, setLocalStorageData] = useState([]);
+  const [copiedLink, setCopiedLink] = useState(false);
 
   const getDoneRecipes = () => {
     const doneRecipesInfo = localStorage.getItem('doneRecipes');
@@ -62,6 +63,12 @@ export default function DoneRecipes() {
   useEffect(() => {
     handleFilterButtonChange();
   }, [handleFilterButtonChange]);
+
+  const handleShareIcon = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setCopiedLink(true);
+    });
+  };
 
   return (
     <div>
@@ -101,19 +108,21 @@ export default function DoneRecipes() {
             width="250px"
           />
           <p data-testid={ `${index}-horizontal-top-text` }>
-            (
             {recipe.type === 'meal'
               ? `${recipe.nationality} - ${recipe.category}`
               : `${recipe.alcoholicOrNot}`}
-            )
           </p>
           <p data-testid={ `${index}-horizontal-name` }>{recipe.name}</p>
           <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
-          <img
-            data-testid={ `${index}-horizontal-share-btn` }
-            src={ shareIcon }
-            alt="ìcone de compartilhamento"
-          />
+
+          <button type="button" onClick={ handleShareIcon }>
+            <img
+              data-testid={ `${index}-horizontal-share-btn` }
+              src={ shareIcon }
+              alt="ìcone de compartilhamento"
+            />
+          </button>
+          {copiedLink && <p><strong>Link copied!</strong></p>}
           <ul>
             {recipe?.tags.map((tag) => (
               <li
