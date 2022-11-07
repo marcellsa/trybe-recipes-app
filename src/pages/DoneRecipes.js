@@ -73,7 +73,7 @@ export default function DoneRecipes() {
   return (
     <div>
       <Header>
-        DoneRecipes
+        Done Recipes
       </Header>
       <button
         data-testid="filter-by-all-btn"
