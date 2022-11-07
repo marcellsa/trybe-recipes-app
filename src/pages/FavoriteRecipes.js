@@ -7,13 +7,10 @@ import shareIcon from '../images/shareIcon.svg';
 
 export default function Favorite() {
   const [filter, setFilter] = useState([]);
-  // const [favorite, setFavorite] = useState(false);
   const [copy, setCopy] = useState(false);
 
-  // const { favoriteRecipes, setFavoriteRecipes } = useContext(Context);
-
   const localStorageFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
-  // console.log(localStorageFavorite);
+
   useEffect(() => {
     setFilter(localStorageFavorite);
   }, []);
@@ -32,10 +29,7 @@ export default function Favorite() {
     setFilter(localStorageFavorite);
   };
 
-  // const checkIfIsFavorite = () => (favorite && blackHeartIcon);
-
   const handleToggleFavorite = ({ target }) => {
-    // setFavorite((previous) => !previous);
     const resultFilter = localStorageFavorite.filter((e) => e.id !== target.id);
 
     setFilter(resultFilter);
@@ -81,7 +75,6 @@ export default function Favorite() {
         {filter
           && filter.map((e, i) => (
             <div key={ e.id }>
-              {/* <p>{e.id}</p> */}
 
               <Link to={ `/${e.type}s/${e.id}` }>
                 <p data-testid={ `${i}-horizontal-name` }>{e.name}</p>
@@ -103,7 +96,7 @@ export default function Favorite() {
               }
 
               <button
-                // className="btn-favorite"
+                className="btn-favorite"
                 type="button"
                 onClick={ () => copyToClipboard(e) }
               >
