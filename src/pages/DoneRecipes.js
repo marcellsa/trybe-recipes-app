@@ -64,8 +64,8 @@ export default function DoneRecipes() {
     handleFilterButtonChange();
   }, [handleFilterButtonChange]);
 
-  const handleShareIcon = () => {
-    navigator.clipboard.writeText(window.location.href).then(() => {
+  const handleShareIcon = ({ type, id }) => {
+    navigator.clipboard.writeText(`${window.location.origin}/${type}s/${id}`).then(() => {
       setCopiedLink(true);
     });
   };
@@ -125,7 +125,7 @@ export default function DoneRecipes() {
           </Link>
           <p data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</p>
 
-          <button type="button" onClick={ handleShareIcon }>
+          <button type="button" onClick={ () => handleShareIcon(recipe) }>
             <img
               data-testid={ `${index}-horizontal-share-btn` }
               src={ shareIcon }
