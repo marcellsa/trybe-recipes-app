@@ -13,7 +13,7 @@ import InProgressMeals from './pages/InProgressMeals';
 import InProgressDrinks from './pages/InProgressDrinks';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
-import Favorite from './pages/Favorite';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
           />
           <Route exact path="/profile" component={ Profile } />
           <Route exact path="/done-recipes" component={ DoneRecipes } />
-          <Route exact path="/favorite-recipes" component={ Favorite } />
+          <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />
           <Route path="*" component={ NotFound } />
         </Switch>
       </BrowserRouter>

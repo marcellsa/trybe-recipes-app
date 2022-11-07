@@ -8,14 +8,14 @@ import Context from '../context/Context';
 export default function ButtonFavoriteAndShare() {
   const [favorite, setFavorite] = useState(false);
   const [copy, setCopy] = useState(false);
-  const [favoriteRecipes, setFavoriteRecipes] = useState({});
+  // const [favoriteRecipes, setFavoriteRecipes] = useState({});
   const history = useHistory();
   const { pathname } = history.location;
   const id = pathname.replace(/[^0-9]/g, '');
   const six = 6;
   const mealOrDrink = pathname.slice(1, six) === 'meals' ? 'meals' : 'drinks';
 
-  const { details } = useContext(Context);
+  const { details, favoriteRecipes, setFavoriteRecipes } = useContext(Context);
   // PRECISA SER REFATORADO
   useEffect(() => {
     if (Object.keys(details)[0] === mealOrDrink) {
