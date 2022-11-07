@@ -13,6 +13,7 @@ function Provider({ children }) {
   const [recommendation, setRecommendation] = useState('');
   const [details, setDetails] = useState({});
   const [isDisableImg, setIsDisableImg] = useState(true);
+  const [favoriteRecipes, setFavoriteRecipes] = useState({});
 
   useEffect(() => {
     const getAPI = async (url) => {
@@ -33,6 +34,8 @@ function Provider({ children }) {
       idPathname,
       details,
       isDisableImg,
+      favoriteRecipes,
+      setFavoriteRecipes,
       setIsDisableImg,
       setDetails,
       setIdPathname,
@@ -42,8 +45,8 @@ function Provider({ children }) {
       setResultFilterDrinks,
       setInputSearch,
     }),
-    [details, idPathname, inputSearch,
-      isDisableImg, mealsRecipes,
+    [details, favoriteRecipes, idPathname,
+      inputSearch, isDisableImg, mealsRecipes,
       recipesList, recommendation, resultFilterDrinks, resultFilterMeals],
   );
   return (
