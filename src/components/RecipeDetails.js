@@ -6,7 +6,7 @@ import CardRecommedation from './CardRecommedation';
 import ButtonStartRecipe from './ButtonStartRecipe';
 
 export default function RecipeDetails() {
-  // const [doneRecipes, setDoneRecipes] = useState(false);
+  const [doneRecipes, setDoneRecipes] = useState(false);
   const [buttonStartName, setButtonStartName] = useState('Start Recipe');
 
   const { setRecommendation, details, setDetails } = useContext(Context);
@@ -124,7 +124,9 @@ export default function RecipeDetails() {
             );
           })}
       <CardRecommedation />
-      <ButtonStartRecipe name={ buttonStartName } />
+      {
+        !doneRecipes && <ButtonStartRecipe name={ buttonStartName } />
+      }
     </div>
   );
 }
