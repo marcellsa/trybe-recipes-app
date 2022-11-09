@@ -25,3 +25,7 @@
   width: 50px;
 }
 
+.check-list:has(.check-ingredient:checked) {
+  text-decoration: line-through solid rgb(0, 0, 0);
+}
+

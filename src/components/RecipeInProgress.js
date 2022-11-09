@@ -62,8 +62,13 @@ export default function RecipeInProgress() {
                     el.includes('strIngredient') && e[el] !== '' && e[el] !== null))
                     .map((elem, ind) => (
                       <div key={ ind }>
-                        <label data-testid={ `${ind}-ingredient-step` } htmlFor={ elem }>
+                        <label
+                          data-testid={ `${ind}-ingredient-step` }
+                          htmlFor={ elem }
+                          className="check-list"
+                        >
                           <input
+                            className="check-ingredient"
                             type="checkbox"
                             name={ elem }
                             id={ elem }
