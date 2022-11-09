@@ -33,7 +33,7 @@ export default function ButtonFavoriteAndShare() {
       };
       setFavoriteRecipes(objFavoriteRecipes);
     }
-  }, [details, mealOrDrink]);
+  }, [details, mealOrDrink, setFavoriteRecipes]);
 
   useEffect(() => {
     const storage = JSON.parse(localStorage.getItem('favoriteRecipes'));

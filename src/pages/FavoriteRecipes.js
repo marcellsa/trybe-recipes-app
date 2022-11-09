@@ -13,7 +13,7 @@ export default function Favorite() {
 
   useEffect(() => {
     setFilter(localStorageFavorite);
-  }, []);
+  }, [localStorageFavorite]);
 
   const handleClickMeals = () => {
     const meal = localStorageFavorite.filter((e) => e.type === 'meal');
