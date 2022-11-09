@@ -34,7 +34,6 @@ export default function RecipeInProgress() {
     <div>
       {(details.drinks || details.meals)
           && (details.meals || details.drinks).map((e) => {
-            console.log(e, 'e');
             const objNames = pathname === `/meals/${id}/in-progress` ? {
               id: 'idMeal',
               name: 'strMeal',
@@ -57,6 +56,26 @@ export default function RecipeInProgress() {
                   alt={ e[objNames.name] }
                 />
                 <p data-testid="recipe-title">{e[objNames.name]}</p>
+                <h3>Ingredients</h3>
+                {
+                  Object.keys(e).filter((el) => (
+                    el.includes('strIngredient') && e[el] !== '' && e[el] !== null))
+                    .map((elem, ind) => (
+                      <div key={ ind }>
+                        <label data-testid={ `${ind}-ingredient-step` } htmlFor={ elem }>
+                          <input
+                            type="checkbox"
+                            name={ elem }
+                            id={ elem }
+                          />
+                          <p>
+                            {e[elem]}
+                          </p>
+                        </label>
+                      </div>
+                    ))
+                }
+
                 <button
                   className="btn-favorite"
                   type="button"
