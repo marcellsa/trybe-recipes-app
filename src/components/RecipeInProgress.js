@@ -3,17 +3,17 @@ import { useHistory } from 'react-router-dom';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
-// import Context from '../context/Context';
 
 export default function RecipeInProgress() {
-  // (e.idMeal === idPathname)
-  // const { setRecipe, recipe } = useContext(Context);
   const [favorite, setFavorite] = useState(false);
   const [details, setDetails] = useState({});
+
   const history = useHistory();
   const { pathname } = history.location;
   const id = pathname.replace(/[^0-9]/g, '');
+
   const checkIfIsFavorite = () => (favorite ? blackHeartIcon : whiteHeartIcon);
+
   const handleToggleFavorite = () => {
     setFavorite((previous) => !previous);
   };
@@ -30,11 +30,6 @@ export default function RecipeInProgress() {
     fetchIdRecipe();
   }, [id, pathname, setDetails]);
 
-  /*  const handleClick = () => {
-    console.log(getId);
-    localStorage.setItem("inProgressRecipes")
-  }; */
-  console.log(details);
   return (
     <div>
       {(details.drinks || details.meals)
@@ -65,7 +60,7 @@ export default function RecipeInProgress() {
                 <button
                   className="btn-favorite"
                   type="button"
-                  /*              onClick={ copyToClipboard } */
+                  // onClick={ copyToClipboard }
                 >
                   <img
                     data-testid="share-btn"
@@ -88,7 +83,7 @@ export default function RecipeInProgress() {
                 <p data-testid="instructions">{e[objNames.instructions]}</p>
                 <button
                   type="button"
-                  data-testid="finish-recipe-category"
+                  data-testid="finish-recipe-btn"
                 >
                   Finalizar Receita
                 </button>
