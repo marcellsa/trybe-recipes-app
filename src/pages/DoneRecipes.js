@@ -10,7 +10,7 @@ const DONE_RECIPES_KEY_TEST = [
     nationality: 'Italian',
     category: 'Vegetarian',
     alcoholicOrNot: '',
-    name: 'zz',
+    name: 'Spicy Arrabiata Penne',
     image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
     doneDate: '23/06/2020',
     tags: ['Pasta', 'Curry'],
