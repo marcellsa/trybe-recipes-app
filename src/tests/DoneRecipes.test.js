@@ -63,4 +63,31 @@ describe('Testing DoneRecipes page', () => {
 
     expect(arrabiataElement).toBeInTheDocument();
   });
+
+  test('Se o botão de All filtra todas as categorias', async () => {
+    renderWithRouter(<DoneRecipes />);
+
+    const drinkFilterButton = screen.getByTestId('filter-by-drink-btn');
+    userEvent.click(drinkFilterButton);
+
+    const allFilterButton = screen.getByTestId('filter-by-all-btn');
+    userEvent.click(allFilterButton);
+
+    const firstRecipe = await screen.findByText(/spicy arrabiata penne/i);
+    const secondRecipe = await screen.findByText(/aquamarine/i);
+
+    expect(firstRecipe && secondRecipe).toBeInTheDocument();
+  });
+
+  test('Se existe o ícone de compartilhamento da tela', async () => {
+    renderWithRouter(<DoneRecipes />);
+
+    const shareIcon = screen.getByTestId('0-horizontal-share-btn');
+    expect(shareIcon).toBeInTheDocument();
+
+    // userEvent.click(shareIcon);
+
+    // const linkCopiedElement = await screen.findByText(/link copied/i);
+    // expect(linkCopiedElement).toBeInTheDocument();
+  });
 });

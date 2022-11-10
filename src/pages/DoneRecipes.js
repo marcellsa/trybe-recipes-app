@@ -129,7 +129,7 @@ export default function DoneRecipes() {
             <img
               data-testid={ `${index}-horizontal-share-btn` }
               src={ shareIcon }
-              alt="ìcone de compartilhamento"
+              alt="ícone de compartilhamento"
             />
           </button>
           {copiedLink && <p><strong>Link copied!</strong></p>}
