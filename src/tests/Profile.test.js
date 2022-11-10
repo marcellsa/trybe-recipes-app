@@ -88,4 +88,10 @@ describe('testa a página do Profile', () => {
       expect(pathname).toBe('/');
     }, 3000);
   });
+
+  it('Verificando página sem email no localStorage', () => {
+    renderWithRouter(<Profile />);
+    const noEmail = screen.getByRole('heading', { name: /email não encontrado/i });
+    expect(noEmail).toBeInTheDocument();
+  });
 });
