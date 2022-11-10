@@ -85,9 +85,12 @@ describe('Testing DoneRecipes page', () => {
     const shareIcon = screen.getByTestId('0-horizontal-share-btn');
     expect(shareIcon).toBeInTheDocument();
 
-    // userEvent.click(shareIcon);
+    userEvent.click(shareIcon);
+    expect(await screen.findByText(/link copied/i));
 
-    // const linkCopiedElement = await screen.findByText(/link copied/i);
-    // expect(linkCopiedElement).toBeInTheDocument();
+    // await waitFor(() => {
+    //   const linkCopiedElement = screen.getByText(/link copied/i);
+    //   expect(linkCopiedElement).toBeInTheDocument();
+    // }, { timeout: 3000 });
   });
 });

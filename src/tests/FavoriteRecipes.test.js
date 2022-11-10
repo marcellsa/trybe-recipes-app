@@ -28,6 +28,7 @@ import renderWithRouter from './renderWithRouter';
 describe('Verifica se na página de Favoritos', () => {
   beforeEach(() => {
     window.localStorage.clear();
+    // localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
   });
 
   it('Verifica se os botões de categorias existem ', () => {
@@ -38,8 +39,14 @@ describe('Verifica se na página de Favoritos', () => {
     expect(btnAll && btnDrink && btnMeal).toBeInTheDocument();
   });
 
+  // test('Se o botão de remover não aparece na página', () => {
+  //   renderWithRouter(<FavoriteRecipes />);
+  //   const removeButton = screen.getByTestId('0-horizontal-favorite-btn');
+  //   expect(removeButton).not.toBeInTheDocument();
+  // });
+
   // it('Verifica se existem 2 itens aparecendo na tela', async () => {
-  //   window.localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  //   // window.localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
   //   renderWithRouter(<FavoriteRecipes />);
   //   const firstItem = await screen.findByText(/spicy arrabiata penne/i);
   //   const secondItem = await screen.findByText(/aquamarine/i);

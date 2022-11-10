@@ -58,11 +58,12 @@ export default function DoneRecipes() {
 
   useEffect(() => {
     getData();
-  }, [getData]);
-
-  useEffect(() => {
     handleFilterButtonChange();
-  }, [handleFilterButtonChange]);
+  }, [getData, handleFilterButtonChange]);
+
+  // useEffect(() => {
+  //   handleFilterButtonChange();
+  // }, [handleFilterButtonChange]);
 
   const handleShareIcon = ({ type, id }) => {
     navigator.clipboard.writeText(`${window.location.origin}/${type}s/${id}`).then(() => {
