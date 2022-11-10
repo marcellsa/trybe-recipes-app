@@ -3,33 +3,33 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 
-const DONE_RECIPES_KEY_TEST = [
-  {
-    id: '52771',
-    type: 'meal',
-    nationality: 'Italian',
-    category: 'Vegetarian',
-    alcoholicOrNot: '',
-    name: 'Spicy Arrabiata Penne',
-    image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-    doneDate: '23/06/2020',
-    tags: ['Pasta', 'Curry'],
-  },
-  {
-    id: '178319',
-    type: 'drink',
-    nationality: '',
-    category: 'Cocktail',
-    alcoholicOrNot: 'Alcoholic',
-    name: 'Aquamarine',
-    image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-    doneDate: '23/06/2020',
-    tags: [],
-  },
-];
+// const DONE_RECIPES_KEY_TEST = [
+//   {
+//     id: '52771',
+//     type: 'meal',
+//     nationality: 'Italian',
+//     category: 'Vegetarian',
+//     alcoholicOrNot: '',
+//     name: 'Spicy Arrabiata Penne',
+//     image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+//     doneDate: '23/06/2020',
+//     tags: ['Pasta', 'Curry'],
+//   },
+//   {
+//     id: '178319',
+//     type: 'drink',
+//     nationality: '',
+//     category: 'Cocktail',
+//     alcoholicOrNot: 'Alcoholic',
+//     name: 'Aquamarine',
+//     image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+//     doneDate: '23/06/2020',
+//     tags: [],
+//   },
+// ];
 
-// localStorage.setItem será usado apenas para desenvolvimento e teste. Será retirado depois
-localStorage.setItem('doneRecipes', JSON.stringify(DONE_RECIPES_KEY_TEST));
+// // localStorage.setItem será usado apenas para desenvolvimento e teste. Será retirado depois
+// localStorage.setItem('doneRecipes', JSON.stringify(DONE_RECIPES_KEY_TEST));
 
 export default function DoneRecipes() {
   const [filterButton, setFilterButton] = useState('All');
