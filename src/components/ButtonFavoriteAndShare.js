@@ -59,9 +59,10 @@ export default function ButtonFavoriteAndShare() {
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      setCopy(true);
-    });
+    navigator.clipboard
+      .writeText(`${window.location.origin}/${mealOrDrink}/${id}`).then(() => {
+        setCopy(true);
+      });
   };
 
   return (

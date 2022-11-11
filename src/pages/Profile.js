@@ -5,7 +5,7 @@ import Header from '../components/Header';
 
 export default function Profile() {
   const storage = JSON.parse(localStorage.getItem('user'));
-  const emailStorage = storage?.email || 'Nenhum usuário encontrado';
+  const emailStorage = storage?.email || 'email não encontrado';
   const history = useHistory();
 
   const clickDoneRecipes = () => {

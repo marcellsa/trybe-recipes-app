@@ -3,34 +3,6 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 
-const DONE_RECIPES_KEY_TEST = [
-  {
-    id: '52771',
-    type: 'meal',
-    nationality: 'Italian',
-    category: 'Vegetarian',
-    alcoholicOrNot: '',
-    name: 'zz',
-    image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-    doneDate: '23/06/2020',
-    tags: ['Pasta', 'Curry'],
-  },
-  {
-    id: '178319',
-    type: 'drink',
-    nationality: '',
-    category: 'Cocktail',
-    alcoholicOrNot: 'Alcoholic',
-    name: 'Aquamarine',
-    image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-    doneDate: '23/06/2020',
-    tags: [],
-  },
-];
-
-// localStorage.setItem será usado apenas para desenvolvimento e teste. Será retirado depois
-localStorage.setItem('doneRecipes', JSON.stringify(DONE_RECIPES_KEY_TEST));
-
 export default function DoneRecipes() {
   const [filterButton, setFilterButton] = useState('All');
   const [localStorageData, setLocalStorageData] = useState([]);
@@ -58,11 +30,12 @@ export default function DoneRecipes() {
 
   useEffect(() => {
     getData();
-  }, [getData]);
-
-  useEffect(() => {
     handleFilterButtonChange();
-  }, [handleFilterButtonChange]);
+  }, [getData, handleFilterButtonChange]);
+
+  // useEffect(() => {
+  //   handleFilterButtonChange();
+  // }, [handleFilterButtonChange]);
 
   const handleShareIcon = ({ type, id }) => {
     navigator.clipboard.writeText(`${window.location.origin}/${type}s/${id}`).then(() => {
@@ -99,7 +72,9 @@ export default function DoneRecipes() {
         Drinks
       </button>
 
-      {localStorageData.length !== 0 && localStorageData.map((recipe, index) => (
+      {/* {console.log(local)} */}
+
+      {localStorageData !== null && localStorageData.map((recipe, index) => (
         <div key={ index }>
           <Link
             to={ recipe.type === 'meal'
@@ -129,7 +104,7 @@ export default function DoneRecipes() {
             <img
               data-testid={ `${index}-horizontal-share-btn` }
               src={ shareIcon }
-              alt="ìcone de compartilhamento"
+              alt="ícone de compartilhamento"
             />
           </button>
           {copiedLink && <p><strong>Link copied!</strong></p>}

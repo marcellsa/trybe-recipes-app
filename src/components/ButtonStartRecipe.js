@@ -26,10 +26,10 @@ export default function ButtonStartRecipe({ name }) {
 
       <button
         // disabled={ handleDisable }
-        className="btn-start-recipe"
-        onClick={ handleClick }
         data-testid="start-recipe-btn"
+        className="btn-start-recipe"
         type="button"
+        onClick={ handleClick }
       >
         { name }
       </button>
