@@ -7,30 +7,30 @@ import renderWithRouter from './renderWithRouter';
 import DetailsMeals from '../pages/DetailsMeals';
 import localStorageMock from '../services/LocalStorageMock';
 
-const favoriteRecipes = [
-  {
-    id: '52771',
-    type: 'meal',
-    nationality: 'Italian',
-    category: 'Vegetarian',
-    alcoholicOrNot: '',
-    name: 'Spicy Arrabiata Penne',
-    image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-  },
-  {
-    id: '178319',
-    type: 'drink',
-    nationality: '',
-    category: 'Cocktail',
-    alcoholicOrNot: 'Alcoholic',
-    name: 'Aquamarine',
-    image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-  },
-];
+// const favoriteRecipes = [
+//   {
+//     id: '52771',
+//     type: 'meal',
+//     nationality: 'Italian',
+//     category: 'Vegetarian',
+//     alcoholicOrNot: '',
+//     name: 'Spicy Arrabiata Penne',
+//     image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+//   },
+//   {
+//     id: '178319',
+//     type: 'drink',
+//     nationality: '',
+//     category: 'Cocktail',
+//     alcoholicOrNot: 'Alcoholic',
+//     name: 'Aquamarine',
+//     image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+//   },
+// ];
 
-const setLocalStorage = (id, data) => {
-  window.localStorage.setItem(id, JSON.stringify(data));
-};
+// const setLocalStorage = (id, data) => {
+//   window.localStorage.setItem(id, JSON.stringify(data));
+// };
 
 describe('Verifica se na página de Favoritos', () => {
   beforeEach(() => {
