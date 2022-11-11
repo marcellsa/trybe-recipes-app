@@ -10,18 +10,18 @@ export default function Favorite() {
   const [copy, setCopy] = useState(false);
 
   const localStorageFavorite = JSON.parse(localStorage.getItem('favoriteRecipes'));
-
   useEffect(() => {
     setFilter(localStorageFavorite);
-  }, [localStorageFavorite]);
+  }, []);
 
   const handleClickMeals = () => {
-    const meal = localStorageFavorite.filter((e) => e.type === 'meal');
+    console.log();
+    const meal = localStorageFavorite.filter((e) => e.type !== 'drink');
     setFilter(meal);
   };
 
   const handleClickDrinks = () => {
-    const drink = localStorageFavorite.filter((e) => e.type === 'drink');
+    const drink = localStorageFavorite.filter((e) => e.type !== 'meal');
     setFilter(drink);
   };
 

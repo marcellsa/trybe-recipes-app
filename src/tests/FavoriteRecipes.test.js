@@ -5,27 +5,32 @@ import { act } from 'react-dom/test-utils';
 import FavoriteRecipes from '../pages/FavoriteRecipes';
 import renderWithRouter from './renderWithRouter';
 import DetailsMeals from '../pages/DetailsMeals';
+import localStorageMock from '../services/LocalStorageMock';
 
-// const favoriteRecipes = [
-//   {
-//     id: '52771',
-//     type: 'meal',
-//     nationality: 'Italian',
-//     category: 'Vegetarian',
-//     alcoholicOrNot: '',
-//     name: 'Spicy Arrabiata Penne',
-//     image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-//   },
-//   {
-//     id: '178319',
-//     type: 'drink',
-//     nationality: '',
-//     category: 'Cocktail',
-//     alcoholicOrNot: 'Alcoholic',
-//     name: 'Aquamarine',
-//     image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-//   },
-// ];
+const favoriteRecipes = [
+  {
+    id: '52771',
+    type: 'meal',
+    nationality: 'Italian',
+    category: 'Vegetarian',
+    alcoholicOrNot: '',
+    name: 'Spicy Arrabiata Penne',
+    image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+  },
+  {
+    id: '178319',
+    type: 'drink',
+    nationality: '',
+    category: 'Cocktail',
+    alcoholicOrNot: 'Alcoholic',
+    name: 'Aquamarine',
+    image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+  },
+];
+
+const setLocalStorage = (id, data) => {
+  window.localStorage.setItem(id, JSON.stringify(data));
+};
 
 describe('Verifica se na página de Favoritos', () => {
   beforeEach(() => {
@@ -48,7 +53,9 @@ describe('Verifica se na página de Favoritos', () => {
   });
 
   it('Verifica se existem 2 itens aparecendo na tela', async () => {
-    // window.localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    global.localStorage = localStorageMock();
+    localStorage.setItem('favoriteRecipes', JSON.stringify());
+
     const { history } = renderWithRouter(<DetailsMeals />);
     act(() => {
       history.push('/meals/52977');
@@ -69,7 +76,6 @@ describe('Verifica se na página de Favoritos', () => {
   });
 
   // it('Verifica se os botões de categoria funcionam', async () => {
-  //   window.localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
   //   renderWithRouter(<FavoriteRecipes />);
   //   const firstItem = await screen.findByText(/spicy arrabiata penne/i);
   //   const secondItem = await screen.findByText(/aquamarine/i);
