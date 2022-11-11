@@ -25,6 +25,10 @@
   width: 50px;
 }
 
-.check-list:has( .check-ingredient:checked ) {
+.checked {
   text-decoration: line-through solid black;
+}
+
+.no-checked {
+  text-decoration: none;
 }

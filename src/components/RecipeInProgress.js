@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import shareIcon from '../images/shareIcon.svg';
+import { setLocalStorage, getLocalStorage } from '../services/LocalStorage';
+import ButtonFavoriteAndShare from './ButtonFavoriteAndShare';
 
 export default function RecipeInProgress() {
-  const [favorite, setFavorite] = useState(false);
   const [details, setDetails] = useState({});
+  const [inProgressRecipes, setInProgressRecipes] = useState({});
 
   const history = useHistory();
   const { pathname } = history.location;
   const id = pathname.replace(/[^0-9]/g, '');
 
-  const checkIfIsFavorite = () => (favorite ? blackHeartIcon : whiteHeartIcon);
-
-  const handleToggleFavorite = () => {
-    setFavorite((previous) => !previous);
+  const INITIAL_STATE = {
+    drinks: {},
+    meals: {},
   };
 
   useEffect(() => {
@@ -30,8 +28,55 @@ export default function RecipeInProgress() {
     fetchIdRecipe();
   }, [id, pathname, setDetails]);
 
+  const path = pathname.includes('meals') ? 'meals' : 'drinks';
+
+  useEffect(() => {
+    const localStorageInProgress = getLocalStorage('inProgressRecipes')
+      ? getLocalStorage('inProgressRecipes') : INITIAL_STATE;
+    setInProgressRecipes(localStorageInProgress);
+  }, []);
+
+  useEffect(() => {
+    setLocalStorage('inProgressRecipes', inProgressRecipes);
+  }, [inProgressRecipes]);
+
+  const handleCick = ({ target }) => {
+    const { checked } = target;
+    const ingredients = target.parentNode.innerText;
+    const prev = inProgressRecipes[path][id] ? inProgressRecipes[path][id] : [];
+    if (checked) {
+      target.parentNode.className = 'checked';
+      const newList = [...prev, ingredients];
+      setInProgressRecipes({
+        ...inProgressRecipes,
+        [path]: {
+          [id]: newList,
+        },
+      });
+    } else {
+      target.parentNode.className = 'no-checked';
+      const newList = inProgressRecipes[path][id]
+        .filter((e) => e !== ingredients);
+      setInProgressRecipes({
+        ...inProgressRecipes,
+        [path]: {
+          [id]: newList,
+        },
+      });
+    }
+  };
+
+  const handleCheck = (ingredient) => {
+    const localStorageInProgress = getLocalStorage('inProgressRecipes');
+    if (localStorageInProgress[path][id]) {
+      return localStorageInProgress[path][id].includes(ingredient);
+    }
+    return false;
+  };
+
   return (
     <div>
+      <ButtonFavoriteAndShare />
       {(details.drinks || details.meals)
           && (details.meals || details.drinks).map((e) => {
             const objNames = pathname === `/meals/${id}/in-progress` ? {
@@ -61,53 +106,35 @@ export default function RecipeInProgress() {
                   Object.keys(e).filter((el) => (
                     el.includes('strIngredient') && e[el] !== '' && e[el] !== null))
                     .map((elem, ind) => (
-                      <div key={ ind }>
-                        <label
+
+                      <label
+                        key={ ind }
+                        data-testid={ `${ind}-ingredient-step` }
+                        htmlFor={ elem }
+                        className={ handleCheck(e[elem]) ? 'checked' : 'no-checked' }
+                      >
+                        <input
                           data-testid={ `${ind}-ingredient-step` }
-                          htmlFor={ elem }
-                          className="check-list"
-                        >
-                          <input
-                            className="check-ingredient"
-                            type="checkbox"
-                            name={ elem }
-                            id={ elem }
-                          />
-                          <p>
-                            {e[elem]}
-                          </p>
-                        </label>
-                      </div>
+                          type="checkbox"
+                          name={ elem }
+                          id={ elem }
+                          defaultChecked={ handleCheck(e[elem]) }
+                          onClick={ handleCick }
+                        />
+
+                        <p>
+                          {e[elem]}
+                        </p>
+                      </label>
+
                     ))
                 }
-
-                <button
-                  className="btn-favorite"
-                  type="button"
-                  // onClick={ copyToClipboard }
-                >
-                  <img
-                    data-testid="share-btn"
-                    src={ shareIcon }
-                    alt="share"
-                  />
-                </button>
-                <button
-                  className="btn-favorite"
-                  type="button"
-                  onClick={ handleToggleFavorite }
-                >
-                  <img
-                    data-testid="favorite-btn"
-                    src={ checkIfIsFavorite() }
-                    alt="favorite"
-                  />
-                </button>
                 <p data-testid="recipe-category">{`Category: ${e[objNames.category]}`}</p>
                 <p data-testid="instructions">{e[objNames.instructions]}</p>
                 <button
                   type="button"
                   data-testid="finish-recipe-btn"
+                  className="btn-start-recipe"
                 >
                   Finalizar Receita
                 </button>

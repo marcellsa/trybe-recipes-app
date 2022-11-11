@@ -1,8 +1,10 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
+import { act } from 'react-dom/test-utils';
 import FavoriteRecipes from '../pages/FavoriteRecipes';
 import renderWithRouter from './renderWithRouter';
+import DetailsMeals from '../pages/DetailsMeals';
 
 // const favoriteRecipes = [
 //   {
@@ -39,19 +41,32 @@ describe('Verifica se na página de Favoritos', () => {
     expect(btnAll && btnDrink && btnMeal).toBeInTheDocument();
   });
 
-  // test('Se o botão de remover não aparece na página', () => {
-  //   renderWithRouter(<FavoriteRecipes />);
-  //   const removeButton = screen.getByTestId('0-horizontal-favorite-btn');
-  //   expect(removeButton).not.toBeInTheDocument();
-  // });
+  it('Se o botão de remover não aparece na página', () => {
+    renderWithRouter(<FavoriteRecipes />);
+    const removeButton = screen.queryByTestId('favorite-btn');
+    expect(removeButton).not.toBeInTheDocument();
+  });
 
-  // it('Verifica se existem 2 itens aparecendo na tela', async () => {
-  //   // window.localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
-  //   renderWithRouter(<FavoriteRecipes />);
-  //   const firstItem = await screen.findByText(/spicy arrabiata penne/i);
-  //   const secondItem = await screen.findByText(/aquamarine/i);
-  //   expect(firstItem && secondItem).toBeInTheDocument();
-  // });
+  it('Verifica se existem 2 itens aparecendo na tela', async () => {
+    // window.localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    const { history } = renderWithRouter(<DetailsMeals />);
+    act(() => {
+      history.push('/meals/52977');
+    });
+    expect(history.location.pathname).toBe('/meals/52977');
+
+    const heart = screen.getByRole('img', {
+      name: /favorite/i,
+    });
+    userEvent.click(heart);
+
+    act(() => {
+      history.push('/favorite-recipes');
+    });
+    expect(history.location.pathname).toBe('/favorite-recipes');
+    const imgCorba = await screen.findByTestId('0-horizontal-image');
+    expect(imgCorba).toBeInTheDocument();
+  });
 
   // it('Verifica se os botões de categoria funcionam', async () => {
   //   window.localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
